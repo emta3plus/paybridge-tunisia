@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
@@ -38,7 +38,15 @@ const POPULAR_SERVICES = [
   { name: 'Adobe Creative Cloud', icon: Cloud },
 ]
 
-export default function NewRequestPage() {
+export default function NewRequestPageWrapper() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center"><div className="animate-spin w-8 h-8 border-2 border-emerald-600 border-t-transparent rounded-full" /></div>}>
+      <NewRequestPage />
+    </Suspense>
+  )
+}
+
+function NewRequestPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [loading, setLoading] = useState(false)
